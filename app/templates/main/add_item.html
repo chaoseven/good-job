@@ -1,0 +1,46 @@
+{%extends 'base.html'%} {%block content%}
+<div class="row">
+    <div class="sixteen vide column">
+        <form id="form1" class="ui form">
+            <div class="field">
+                <label>Title</label>
+                <input type="text" id="title" />
+                <label>Status</label>
+                <select id="status" class="ui search dropdown">
+                    <option value="0">ready</option>
+                    <option value="1">inprogress</option>
+                    <option value="2">overdue</option>
+                    <option value="3">completed</option>
+                    <option value="4">canceled</option>
+                </select>
+                <label>Description</label>
+                <textarea id="description"></textarea>
+                <label>Tags</label>
+                <input type="text" id="tag_input" placeholder="多个tag用英文分号分隔" />
+            </div>
+            <div class="fiedl">
+                <div id="tag_display"></div>
+            </div>
+            <hr />
+            <div class="field">
+                <div id="sb" class="ui primary button">Submit</div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $("#sb").click(function () {
+        $('#form1').addClass("loading");
+    })
+    $("#tag_input").keyup(function (e) {
+        var tags = $("#tag_input").val();
+        var tagarr = tags.split(";");
+        $("#tag_display").empty();
+        for (var i = 0; i < tagarr.length - 1; i++) {
+            if (tagarr[i] != undefined
+                && tagarr[i] != null
+                && tagarr[i] != "")
+                $("#tag_display").append("<i class='ui teal tag label'>" + tagarr[i] + "</i>");
+        }
+    })
+</script> {%endblock%}

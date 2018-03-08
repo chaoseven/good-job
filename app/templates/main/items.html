@@ -1,0 +1,122 @@
+{% extends 'base.html' %} {%block content%}
+<div class="row">
+    <div class="two wide column">
+        <div class="ui mini statistics">
+            <div class="statistic">
+                <div class="value">
+                    60
+                </div>
+                <div class="label">
+                    all
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="two wide column">
+        <div class="ui mini statistics">
+            <div class="red statistic">
+                <a class="value" href="#">27</a>
+                <div class="label">
+                    overdue
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="two wide column">
+        <div class="ui mini statistics">
+            <div class="yellow statistic">
+                <a class="value" href="#">27</a>
+                <div class="label">
+                    inprogress
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="two wide column">
+        <div class="ui mini statistics">
+            <div class="green statistic">
+                <a class="value" href="#">6</a>
+                <div class="label">
+                    ready
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="two wide column">
+        <a href="{{url_for('main.add_item')}}" id="add_item" class="item">
+            <i class="add icon"></i> New Item
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="sixteen wide column">
+        <div class="ui raised segment">
+            <span class="ui ribbon label" data-st="overdue">overdue</span>
+            <span class="label">
+                <a href="#">Account Details</a>
+            </span>
+            <p>明天早晨8点起来锻炼身体.</p>
+            <p>
+                <i class="ui tag label">overdue</i>
+            </p>
+            <div class="ui feed">
+                <div class="event">
+                    <div class="content">
+                        <div class="date">
+                            last updated 2018-03-08 17:31 by chao
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <i class="edit icon"></i>
+            </a>
+            <a href="#">
+                <i class="delete icon"></i>
+            </a>
+        </div>
+        <div class="ui raised segment">
+            <span class="ui ribbon label" data-st="inprogress">inprogress</span>
+            <span class="label">
+                <a href="#">Account Details</a>
+            </span>
+            <p>明天早晨8点起来锻炼身体.</p>
+            <p>
+                <i class="ui tag label">inprogress</i>
+            </p>
+            <a href="#">
+                <i class="edit icon"></i>
+            </a>
+            <a href="#">
+                <i class="delete icon"></i>
+            </a>
+        </div>
+        <div class="ui raised segment">
+            <span class="ui ribbon label" data-st="ready">ready</span>
+            <span class="label">
+                <a href="#">Account Details</a>
+            </span>
+            <p>明天早晨8点起来锻炼身体.</p>
+            <p>
+                <i class="ui tag label">inprogress</i>
+            </p>
+            <a href="#">
+                <i class="edit icon"></i>
+            </a>
+            <a href="#">
+                <i class="delete icon"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<script>
+    $('#add_item').click(function () {
+        $('#new_item_edit').modal('show');
+    })
+
+    $("span[data-st=overdue]").addClass("red");
+    $("span[data-st=inprogress]").addClass("yellow")
+    $("span[data-st=ready]").addClass("green")
+</script> {%endblock%}
