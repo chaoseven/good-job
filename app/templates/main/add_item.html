@@ -1,17 +1,17 @@
 {%extends 'base.html'%} {%block content%}
 <div class="row">
     <div class="sixteen vide column">
-        <form id="form1" class="ui form">
+        <form id="item_fm" class="ui form">
             <div class="field">
                 <label>Title</label>
                 <input type="text" id="title" />
                 <label>Status</label>
                 <select id="status" class="ui search dropdown">
-                    <option value="0">ready</option>
-                    <option value="1">inprogress</option>
-                    <option value="2">overdue</option>
-                    <option value="3">completed</option>
-                    <option value="4">canceled</option>
+                    <option value="ready">ready</option>
+                    <option value="inprogress">inprogress</option>
+                    <option value="overdue">overdue</option>
+                    <option value="completed">completed</option>
+                    <option value="canceled">canceled</option>
                 </select>
                 <label>Description</label>
                 <textarea id="description"></textarea>
@@ -23,15 +23,22 @@
             </div>
             <hr />
             <div class="field">
-                <div id="sb" class="ui primary button">Submit</div>
+                <div id="submit" class="ui primary button">Submit</div>
             </div>
         </form>
     </div>
 </div>
+<!--modal area-->
+<div id="response_info" class="ui mini modal">
+    <div class="header">Info</div>
+    <div id="response_msg" class="content"></div>
+    <div class="actions">
+        <div id="got_info" class="ui positive right labeled icon button">
+            got
+        </div>
+    </div>
+</div>
 <script>
-    $("#sb").click(function () {
-        $('#form1').addClass("loading");
-    })
     $("#tag_input").keyup(function (e) {
         var tags = $("#tag_input").val();
         var tagarr = tags.split(";");
@@ -42,5 +49,39 @@
                 && tagarr[i] != "")
                 $("#tag_display").append("<i class='ui teal tag label'>" + tagarr[i] + "</i>");
         }
+    })
+    $("#submit").click(function () {
+        $('#item_fm').addClass("loading");
+        $("#got_info").click(function () {
+            window.location.href = "{{url_for('main.items',id='items')}}";
+        })
+
+        var item = new FormData();
+        var title = $.trim($("#title").val());
+        var status = $.trim($("#status").val());
+        var description = $.trim($("#description").val());
+        var tags = $.trim($("#tag_input").val());
+
+        item.append("title", title);
+        item.append("status", status);
+        item.append("description", description);
+        item.append("tags", tags);
+        $.ajax({
+            method: "POST",
+            contentType: false, //不加这两句会报错，目前不知道原因
+            processData: false, //不加这两句会报错，目前不知道原因
+            url: "{{url_for('main.post_item')}}",
+            data: item,
+            success: function (data) {
+                if (data == 'OK') {
+                    $('#item_fm').removeClass("loading");
+                    $("#response_msg").text("New item has been created successfully!");
+                    $("#response_info").modal("show");
+                } else {
+                    $("#response_msg").text("New item has been created failed!");
+                }
+                $("#response_info").modal("show");
+            }
+        });
     })
 </script> {%endblock%}

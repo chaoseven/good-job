@@ -1,4 +1,4 @@
-status
+status:ready inprogress completed overdue canceled
 title
 description
 update time

@@ -1,0 +1,108 @@
+{%extends 'base.html'%} {%block content%}
+<div class="row">
+    <div class="sixteen vide column">
+        <form id="item_fm" class="ui form">
+            <div class="field">
+                <label>ID</label>
+                <span id="uni_id">{{item.uni_id}}</span>
+                <label>Title</label>
+                <input type="text" id="title" />
+                <label>Status</label>
+                <select id="status" class="ui search dropdown">
+                    <option value="ready">ready</option>
+                    <option value="inprogress">inprogress</option>
+                    <option value="overdue">overdue</option>
+                    <option value="completed">completed</option>
+                    <option value="canceled">canceled</option>
+                </select>
+                <label>Description</label>
+                <textarea id="description"></textarea>
+                <label>Tags</label>
+                <input type="text" id="tag_input" placeholder="多个tag用英文分号分隔" />
+            </div>
+            <div class="fiedl">
+                <div id="tag_display"></div>
+            </div>
+            <hr />
+            <div class="field">
+                <div id="submit" class="ui primary button">Submit</div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--modal area-->
+<div id="response_info" class="ui mini modal">
+    <div class="header">Info</div>
+    <div id="response_msg" class="content"></div>
+    <div class="actions">
+        <div id="got_info" class="ui positive right labeled icon button">
+            got
+        </div>
+    </div>
+</div>
+<script>
+    $("#title").val('{{item.title}}');
+    $("#status").val('{{item.status}}');
+    $("#description").val('{{item.description}}');
+    $("#tag_input").val('{{item.tags}}');
+    var tags = $.trim('{{item.tags}}').split(';');
+    for (var i = 0; i < tags.length - 1; i++) {
+        var tag = tags[i];
+        if (tag != undefined
+            && tag != null
+            && tag != ';') {
+            $("#tag_display").append(
+                '<i class="ui teal tag label">' + tag + '</i>'
+            );
+        }
+    }
+
+
+    $("#tag_input").keyup(function (e) {
+        var tags = $("#tag_input").val();
+        var tagarr = tags.split(";");
+        $("#tag_display").empty();
+        for (var i = 0; i < tagarr.length - 1; i++) {
+            if (tagarr[i] != undefined
+                && tagarr[i] != null
+                && tagarr[i] != "")
+                $("#tag_display").append("<i class='ui teal tag label'>" + tagarr[i] + "</i>");
+        }
+    })
+    $("#submit").click(function () {
+        $('#item_fm').addClass("loading");
+
+        $("#got_info").click(function(){
+            window.location.href = "{{url_for('main.items',id='items')}}";
+        })
+        var item = new FormData();
+        var id = $("#uni_id").text();
+        var title = $.trim($("#title").val());
+        var status = $.trim($("#status").val());
+        var description = $.trim($("#description").val());
+        var tags = $.trim($("#tag_input").val());
+
+        item.append("uni_id", id);
+        item.append("title", title);
+        item.append("status", status);
+        item.append("description", description);
+        item.append("tags", tags);
+        $.ajax({
+            method: "POST",
+            contentType: false, //不加这两句会报错，目前不知道原因
+            processData: false, //不加这两句会报错，目前不知道原因
+            url: "{{url_for('main.update_item')}}",
+            data: item,
+            success: function (data) {
+                if (data == 'OK') {
+                    $('#item_fm').removeClass("loading");
+                    $("#response_msg").text("Item has been updated successfully!");
+
+                } else {
+                    $("#response_msg").text("Item has been updated failed!");
+                }
+                $("#response_info").modal("show");
+            }
+        });
+    })
+</script> {%endblock%}
