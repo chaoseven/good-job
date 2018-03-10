@@ -69,3 +69,9 @@ def get_item_with_status(id,st):
     items=GetAllItems()
     res = [it for it in items if it.status==st]
     return render_template("main/query_items.html",items=res,active_item=id,st=st)
+
+@main.route("/items/query_by_tag/<id>/<tag>")
+def get_item_with_tag(id,tag):
+    items=GetAllItems()
+    res=[it for it in items if it.tags.find(tag)>=0]
+    return render_template("main/query_item_by_tag.html",items=res,active_item=id,tag=tag)

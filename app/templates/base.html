@@ -31,8 +31,8 @@
                         <div class="right menu">
                             <div class="item">
                                 <div class="ui transparent icon input">
-                                    <input type="text" placeholder="Search tags...">
-                                    <i class="search link icon"></i>
+                                    <input id="tag" type="text" placeholder="Search tags...">
+                                    <i id="search" class="search link icon"></i>
                                 </div>
                             </div>
                         </div>
@@ -45,6 +45,10 @@
     </div>
     <script>
         $('#{{ active_item }}').addClass("active");
+        $("#search").click(function(){
+            var tag=$.trim($("#tag").val());
+            window.location.href="/items/query_by_tag/items/"+tag;
+        })
     </script> {%block foot_script%} {%endblock%}
 </body>
 
