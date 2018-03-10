@@ -16,7 +16,9 @@
                     <option value="canceled">canceled</option>
                 </select>
                 <label>Description</label>
-                <textarea id="description"></textarea>
+                <textarea id="description">
+                    {{item.description}}
+                </textarea>
                 <label>Tags</label>
                 <input type="text" id="tag_input" placeholder="多个tag用英文分号分隔" />
             </div>
@@ -43,7 +45,6 @@
 <script>
     $("#title").val('{{item.title}}');
     $("#status").val('{{item.status}}');
-    $("#description").val('{{item.description}}');
     $("#tag_input").val('{{item.tags}}');
     var tags = $.trim('{{item.tags}}').split(';');
     for (var i = 0; i < tags.length - 1; i++) {
@@ -73,6 +74,7 @@
         $('#item_fm').addClass("loading");
 
         $("#got_info").click(function(){
+            $("#response_info").modal("hide");
             window.location.href = "{{url_for('main.items',id='items')}}";
         })
         var item = new FormData();

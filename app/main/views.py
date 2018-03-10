@@ -63,3 +63,9 @@ def update_item():
 
     UpdateItem(item)
     return "OK"
+
+@main.route("/items/query_items/<id>/<st>")
+def get_item_with_status(id,st):
+    items=GetAllItems()
+    res = [it for it in items if it.status==st]
+    return render_template("main/query_items.html",items=res,active_item=id,st=st)

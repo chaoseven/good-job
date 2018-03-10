@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {%block content%}
+<div class="row">
+    <div class="two wide column">
+        <div class="ui mini statistics">
+            <div class="statistic">
+                <div class="value">
+                    {{items|length}}
+                </div>
+                <div class="label">
+                    {{st}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="two wide column">
+        <a href="{{url_for('main.add_item')}}" id="add_item" class="item">
+            <i class="add icon"></i> New Item
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="sixteen wide column">
+        {% for item in items %}
+        <div class="ui raised segment">
+            <span class="ui ribbon label" data-st="{{item.status}}">{{item.status}}</span>
+            <span class="label">
+                {{item.title}}
+            </span>
+            <p>{{item.description}}</p>
+            <p>
+                {%for t in item["tags"].split(";")%} {%if not t==""%}
+                <i class="ui teal tag label">{{t}}</i>
+                {%endif%} {%endfor%}
+            </p>
+            <div class="ui feed">
+                <div class="event">
+                    <div class="content">
+                        <div class="date">
+                            last updated {{item.updatetime}} by chao
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="{{url_for('main.edit_item',id='items',item_id=item.uni_id)}}" data-id="{{item.uni_id}}" data-action="edit">
+                <i class="edit icon"></i>
+            </a>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+<!--modal area-->
+<div id="delete_confirm" class="ui modal">
+    <div class="header">Header</div>
+    <div class="content">
+        <p>
+            Are you sure to delete this item?
+        </p>
+    </div>
+    <div class="actions">
+        <div id="confirm_delete" class="ui green button">Yes</div>
+        <div id="canceled_delete" class="ui red button">No</div>
+    </div>
+</div>
+<script>
+    $('#add_item').click(function () {
+        $('#new_item_edit').modal('show');
+    })
+
+    $("a[data-action='delete']").click(function () {
+        $("#delete_confirm").modal("show");
+    })
+
+    $("span[data-st=overdue]").addClass("red");
+    $("span[data-st=inprogress]").addClass("yellow")
+    $("span[data-st=ready]").addClass("green")
+    $("span[data-st=completed]").addClass("blue")
+    $("span[data-st=canceled]").addClass("grey")
+</script> {%endblock%}

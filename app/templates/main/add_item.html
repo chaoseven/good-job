@@ -53,6 +53,7 @@
     $("#submit").click(function () {
         $('#item_fm').addClass("loading");
         $("#got_info").click(function () {
+            $("#response_info").modal("hide");
             window.location.href = "{{url_for('main.items',id='items')}}";
         })
 

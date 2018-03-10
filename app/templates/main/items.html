@@ -15,7 +15,7 @@
     <div class="two wide column">
         <div class="ui mini statistics">
             <div class="red statistic">
-                <a class="value" href="#">
+                <a class="value" href="{{url_for('main.get_item_with_status',id='items',st='overdue')}}">
                     {{overdue_items|length}}
                 </a>
                 <div class="label">
@@ -27,7 +27,7 @@
     <div class="two wide column">
         <div class="ui mini statistics">
             <div class="yellow statistic">
-                <a class="value" href="#">
+                <a class="value" href="{{url_for('main.get_item_with_status',id='items',st='inprogress')}}">
                     {{inprogress_items|length}}
                 </a>
                 <div class="label">
@@ -39,7 +39,7 @@
     <div class="two wide column">
         <div class="ui mini statistics">
             <div class="green statistic">
-                <a class="value" href="#">
+                <a class="value" href="{{url_for('main.get_item_with_status',id='items',st='ready')}}">
                     {{ready_items|length}}
                 </a>
                 <div class="label">
@@ -51,7 +51,7 @@
     <div class="two wide column">
         <div class="ui mini statistics">
             <div class="blue statistic">
-                <a class="value" href="#">
+                <a class="value" href="{{url_for('main.get_item_with_status',id='items',st='completed')}}">
                     {{completed_items|length}}
                 </a>
                 <div class="label">
@@ -63,7 +63,7 @@
     <div class="two wide column">
         <div class="ui mini statistics">
             <div class="grey statistic">
-                <a class="value" href="#">
+                <a class="value" href="{{url_for('main.get_item_with_status',id='items',st='canceled')}}">
                     {{canceled_items|length}}
                 </a>
                 <div class="label">
